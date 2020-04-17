@@ -243,8 +243,104 @@ public class myStringBuilder {
 		return String.valueOf(myString);
 	}
 	
-
 	
+	//-------------------------------------------------------------	
+	//Name: reverse
+	//Description: reverses the character array
+	//-------------------------------------------------------------
+	public String reverse() {
+		int i = 0;
+		int x = size;
+		
+		while(i!=x) {
+			
+			char temp = myString[i];
+			myString[i] = myString[x-1];
+			myString[x-1] = temp;
+			i++;
+			x--;	
+		}
+		
+		return String.valueOf(myString);
+		
+	}
+
+	//-------------------------------------------------------------	
+	//Name: replace(startIndex, endIndex, string)
+	//Description: replaces part of the stringBuilder with the string
+	// at the predetermined indexes
+	//-------------------------------------------------------------
+	public String replace(int startIndex, int endIndex, String replacement) throws Exception {
+		//check boundaries
+		checkBoundaries(startIndex);
+		checkBoundaries(endIndex);
+		checkStartEndBoundaries(startIndex, endIndex);
+		
+		resize(replacement.length());
+		
+		int x = 0;
+		for(int i = startIndex; i <= endIndex; i++) {
+			
+			myString[i] = replacement.charAt(x);
+		}
+		
+		return String.valueOf(myString);
+	}
+	
+	
+	//-------------------------------------------------------------	
+	//Name: insert(offset, string)
+	//Description: inserts a string at the offset provided
+	//-------------------------------------------------------------
+	public String insert(int offset, String input) throws Exception {
+		
+		checkBoundaries(offset);
+		resize(input.length());
+		
+		//move the pre-existing letters out of the way
+		for(int i = getSize(); i >= offset; i --) {
+			myString[i + offset] = myString[i];
+		}
+		
+		int x = offset;
+		int counter = 0;
+		//insert input
+		while(counter != input.length() - 1) {
+			
+			myString[offset] = input.charAt(counter);
+			counter ++;
+			size ++;
+			capacity --;
+			
+		}
+		return input.valueOf(myString);
+	}
+	
+	
+	//-------------------------------------------------------------	
+	//Name: checkStartEndBoundaries(startIndex, endIndex)
+	//Description: checks boundaries between start and end index
+	//-------------------------------------------------------------
+	private void checkStartEndBoundaries(int startIndex, int endIndex) throws Exception {
+		
+		if(endIndex < startIndex) {
+			throw new Exception("endIndex cannot be less than startIndex");
+		}
+		
+	}
+	
+	//-------------------------------------------------------------	
+	//Name: checkBoundaries(index)
+	//Description: checks boundaries 
+	//-------------------------------------------------------------
+	void checkBoundaries(int index) throws Exception
+	{
+		if((index < 0) || (index > myString.length - 1)) {
+			throw new Exception("index not within boundaries");
+		}
+		
+		
+	}
 	//-------------------------------------------------------------	
 	//Name: getCapacity()
 	//Description: get the capacity of the char array
